@@ -92,6 +92,25 @@
               ]
      });
   });
+  
+  function deleteItem(itemId){
+    //alert(itemId)
+    var url = "{{URL('items')}}";
+    $.ajax({
+          url: url+"/"+itemId,
+        //  type:"POST",
+          type: "DELETE",
+          data:{
+				_token:'{{ csrf_token() }}'
+			},
+          success:function(response){
+            //console.log(response);
+            //$("#table").ajax.reload();
+            $('#table').DataTable().ajax.reload(null, false);
+
+          },
+         });
+  }
   </script>       
   
  

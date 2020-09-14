@@ -38,11 +38,11 @@ class ItemController extends Controller
                         $btn = '';
                            //$btn = '<a href="'.route('items.edit', $row->id) .'" class="edit btn btn-info btn-sm">View</a>';
                            $btn = $btn.' <a href="'.route('items.edit', $row->id) .'" class="edit btn btn-primary btn-sm">Edit</a>';
-                           $btn = $btn.' <a href="'.route('items.destroy', $row->id) .'" class="edit btn btn-danger btn-sm">Delete</a>';
-         
+                           $btn = $btn.' <a href="javascript:void(0);" class="edit btn btn-danger btn-sm" onclick="deleteItem('.$row->id.')">Delete</a>';
+                            
                             return $btn;
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['delete' => 'delete','action' => 'action'])
                     ->make(true);
       //  }
         
@@ -125,8 +125,7 @@ class ItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy( $id)
-    { echo $id;die;
-        //
+    { 
         $item=Item::find($id);  
         $item->delete();
     }
