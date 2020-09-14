@@ -21,6 +21,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/items/add/', 'ItemController@addItem');
 Route::resource('/items','ItemController');
+Route::get('/clients/add/', 'ClientController@addClient');
+Route::resource('/clients','ClientController');
 
 //Route::get('/items/create', 'ItemController@create');
 //Route::get('/items/index', 'ItemController@index');

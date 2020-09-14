@@ -32,6 +32,7 @@
 <ul class="sidebar-menu tree" data-widget="tree">
 <li><a href="{{url('/')}}/accounting"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 <li><a href="{{url('/')}}/items"><i class="fa fa-cubes"></i> <span>Items</span></a></li>
+<li><a href="{{url('/')}}/clients"><i class="fa fa-cubes"></i> <span>Clients</span></a></li>
 <li class="treeview">
               <a href="#">
           <i class="fa fa-money"></i> <span>Incomes</span>

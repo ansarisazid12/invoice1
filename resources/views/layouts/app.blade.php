@@ -111,6 +111,38 @@
           },
          });
   }
+  $(function() {
+        $('#client-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ url('/clients/create') }}',
+        columns: [
+                 { data: 'id', name: 'id' },
+                 { data: 'name', name: 'name' },
+                 { data: 'gst', name: 'gst' },
+                 {data: 'action', name: 'action', orderable: false, searchable: false},
+              ]
+     });
+  });
+  
+  function deleteclients(itemId){
+    //alert(itemId)
+    var url = "{{URL('clients')}}";
+    $.ajax({
+          url: url+"/"+itemId,
+        //  type:"POST",
+          type: "DELETE",
+          data:{
+				_token:'{{ csrf_token() }}'
+			},
+          success:function(response){
+            //console.log(response);
+            //$("#table").ajax.reload();
+            $('#client-table').DataTable().ajax.reload(null, false);
+
+          },
+         });
+  }
   </script>       
   
  
