@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use DB;
 use Illuminate\Http\Request;
 use Datatables;
 class ClientController extends Controller
@@ -54,27 +55,42 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    { //var_dump( $request);
-        //
+    public function store(Request $request, Client $client)
+    {  $id = $request->get('id');
+        
         $request->validate([
             'name'=>'required',
             'gst'=>'required',
             'phone'=>'required',
-            'pan'=>'required',
-           // 'address'=>'required',
-           // 'city'=>'required',
-           // 'state'=>'required'
+            'address'=>'required',
+            'city'=>'required',
+            'state'=>'required',
 
         ]);
-        $client = new Client([
-            'name' => $request->get('name'),
-            'gst' => $request->get('gst'),
-            'phone' => $request->get('phone'),
-            'pan' => $request->get('pan')
-        ]);
-        $client->save();
-        return redirect('/clients')->with('success', 'Item saved!');
+        if(!empty($id))
+        {
+            //dd($id);
+            $client->update($request->all());
+            $message = "Item Update!";
+        }else{
+            
+            $client = new Client([
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'phone' => $request->get('phone'),
+                'gst' => $request->get('gst'),
+                'pan' => $request->get('pan'),
+                'address' => $request->get('address'),
+                'city' => $request->get('city'),
+                'state' => $request->get('state'),
+                'country' => $request->get('country'),
+                'pincode' => $request->get('pincode')
+            ]);
+            
+            $client->save();
+            $message = "Item Saved!";
+        }
+        return redirect('/clients')->with('success', $message);
     }
 
     /**
@@ -98,15 +114,16 @@ class ClientController extends Controller
     { 
         //
         $client = new Client;
-
-        return view('clients.edit',compact('client'));
+        $state = DB::select('select * from state ORDER BY state');
+        return view('clients.edit',compact(['client'=>'client','state'=>'state']));
     }
     public function edit($id)
     { 
         //
         //return view('items.edit');
         $client = Client::find($id); 
-        return view('clients.edit', compact('client'));  
+        $state = DB::select('select * from state ORDER BY state');
+        return view('clients.edit',compact(['client'=>'client','state'=>'state'])); 
     }
 
     /**
